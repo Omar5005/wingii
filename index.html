@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WINGII - الفخامة والأناقة</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for Arabic & English -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">WINGII</a>
+            <div class="nav-links">
+                <a href="#home" class="active">الرئيسية</a>
+                <a href="#categories">الأقسام</a>
+                <a href="#about">من نحن</a>
+                <a href="#contact">تواصل معنا</a>
+                <a href="#consultation">حجز استشارة</a>
+                <a href="#complaints">الشكاوي</a>
+            </div>
+            <div class="nav-icons">
+                <div class="user-menu" id="userMenu">
+                    <span id="welcomeMsg" class="welcome-msg hidden"></span>
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <button class="logout-btn hidden" id="logoutBtn" title="تسجيل الخروج">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="ابحث عن منتج...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <button class="cart-btn" id="cartBtn">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home">الرئيسية</a>
+        <a href="#categories">الأقسام</a>
+        <a href="#about">من نحن</a>
+        <a href="#contact">تواصل معنا</a>
+        <a href="#consultation">حجز استشارة</a>
+        <a href="#complaints">الشكاوي</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content hidden-right">
+            <h1>اكتشف الفخامة مع <span>WINGII</span></h1>
+            <p>أحدث صيحات الموضة العالمية بين يديك. تسوق الآن واحصل على خصومات حصرية.</p>
+            <a href="#categories" class="btn btn-primary">تسوق الآن</a>
+        </div>
+        <div class="hero-image hidden-left">
+            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop" alt="Fashion Hero">
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="featured" class="section hidden-left">
+        <div class="container">
+            <h2 class="section-title">المنتجات المميزة</h2>
+            <div class="products-grid" id="featuredProducts">
+                <!-- Products dynamically injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="section bg-light hidden-right">
+        <div class="container">
+            <h2 class="section-title">تسوق حسب القسم</h2>
+            <div class="category-filters" id="categoryFilters">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="men">رجالي</button>
+                <button class="filter-btn" data-filter="women">نسائي</button>
+                <button class="filter-btn" data-filter="hoodies">هودي</button>
+                <button class="filter-btn" data-filter="watches">ساعات</button>
+                <button class="filter-btn" data-filter="bags">حقائب</button>
+                <button class="filter-btn" data-filter="sneakers">أحذية رياضية</button>
+            </div>
+            
+            <!-- Men Sub-categories (Hidden by default, shown when Men is selected) -->
+            <div class="sub-category-filters hidden" id="menSubFilters">
+                <button class="sub-filter-btn active" data-subfilter="all">الكل رجالي</button>
+                <button class="sub-filter-btn" data-subfilter="men-tshirts">تيشيرتات</button>
+                <button class="sub-filter-btn" data-subfilter="men-pants">بناطيل</button>
+                <button class="sub-filter-btn" data-subfilter="men-shoes">أحذية</button>
+                <button class="sub-filter-btn" data-subfilter="men-accessories">إكسسوارات</button>
+                <button class="sub-filter-btn" data-subfilter="men-sunglasses">نظارات شمسية</button>
+            </div>
+
+            <div class="products-grid" id="categoryProducts">
+                <!-- Products dynamically injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Who We Are -->
+    <section id="about" class="section">
+        <div class="container about-container">
+            <div class="about-image hidden-right">
+                <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=2070&auto=format&fit=crop" alt="About WINGII">
+            </div>
+            <div class="about-content hidden-left">
+                <h2 class="section-title" style="text-align: right;">من نحن - WINGII</h2>
+                <p>تأسست WINGII على يد عمر، وهي علامة تجارية رائدة في عالم الأزياء الفاخرة. نسعى دائماً لتقديم أحدث صيحات الموضة بجودة لا تضاهى وتصاميم تعكس الأناقة العصرية.</p>
+                <p>رؤيتنا هي تمكين كل فرد من التعبير عن نفسه من خلال أزياء تجمع بين الراحة والفخامة. نحن نؤمن بأن الموضة ليست مجرد ملابس، بل هي أسلوب حياة.</p>
+                <a href="#contact" class="btn btn-outline">تواصل معنا</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultation Booking Section -->
+    <section id="consultation" class="section bg-light hidden-right">
+        <div class="container">
+            <h2 class="section-title">حجز استشارة أزياء</h2>
+            <p class="section-subtitle">احصل على استشارة خاصة من خبراء الموضة لدينا لتجد ما يناسبك تماماً.</p>
+            <form id="consultationForm" class="contact-form">
+                <div class="form-group">
+                    <input type="text" id="consultName" placeholder="الاسم الكامل" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="consultEmail" placeholder="البريد الإلكتروني" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="consultPhone" placeholder="رقم الهاتف" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="consultDetails" rows="4" placeholder="تفاصيل طلب الاستشارة" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">تأكيد الحجز</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Inquiry / Contact Section -->
+    <section id="contact" class="section hidden-left">
+        <div class="container">
+            <h2 class="section-title">الاستفسارات والتواصل</h2>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <input type="text" id="contactName" placeholder="الاسم" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="contactEmail" placeholder="البريد الإلكتروني" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="contactMessage" rows="5" placeholder="رسالتك" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">إرسال الرسالة</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Complaints Section -->
+    <section id="complaints" class="section bg-light hidden-right">
+        <div class="container">
+            <h2 class="section-title">الشكاوي والمقترحات</h2>
+            <p class="section-subtitle">رأيك يهمنا. إذا كان لديك أي شكوى أو اقتراح، يرجى مشاركته معنا.</p>
+            <form id="complaintForm" class="contact-form">
+                <div class="form-group">
+                    <input type="text" id="compName" placeholder="الاسم" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="compPhone" placeholder="رقم الهاتف" required>
+                </div>
+                <div class="form-group">
+                    <select id="compType" required>
+                        <option value="" disabled selected>نوع الرسالة</option>
+                        <option value="شكوى">شكوى</option>
+                        <option value="اقتراح">اقتراح</option>
+                        <option value="استفسار">استفسار</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea id="compMessage" rows="5" placeholder="تفاصيل الشكوى أو الاقتراح" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">إرسال</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <h2>WINGII</h2>
+                <p>الأناقة الفاخرة بين يديك.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#categories">الأقسام</a></li>
+                    <li><a href="#about">من نحن</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>تواصل معنا</h3>
+                <p><i class="fas fa-envelope"></i> info@wingii.com</p>
+                <p><i class="fas fa-phone"></i> +966 12 345 6789</p>
+                <p><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 WINGII. جميع الحقوق محفوظة لعمر.</p>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Modal -->
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-modal">
+            <div class="cart-header">
+                <h2>سلة المشتريات</h2>
+                <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items injected here -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>الإجمالي:</span>
+                    <span id="cartTotalPrice">$0.00</span>
+                </div>
+                <button class="btn btn-primary btn-block" id="checkoutBtn">إتمام الطلب</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="cart-overlay" id="checkoutOverlay">
+        <div class="cart-modal" style="width: 500px; max-width: 100%;">
+            <div class="cart-header">
+                <h2>تأكيد الطلب</h2>
+                <button class="close-cart" id="closeCheckout"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="cart-items" style="padding: 0;">
+                <form id="checkoutForm" class="contact-form" style="border: none; margin: 0; padding: 20px; max-width: none; background: transparent;">
+                    <div class="form-group">
+                        <input type="text" id="orderName" placeholder="الاسم كامل" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="orderPhone" placeholder="رقم الموبايل" required>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-size: 0.8rem; margin-bottom: 5px; display: block;">رقم آخر (اختياري)</label>
+                        <input type="tel" id="orderPhone2" placeholder="رقم آخر">
+                    </div>
+                    <div class="form-group">
+                        <select id="orderGov" required>
+                            <option value="" disabled selected>المحافظة</option>
+                            <!-- Injected via JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="orderRegion" required disabled>
+                            <option value="" disabled selected>المنطقة</option>
+                            <!-- Injected via JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="orderAddress" placeholder="العنوان بالتفصيل (الشارع، رقم العمارة، الشقة)" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="orderLandmark" placeholder="علامة مميزة" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="orderTime" placeholder="أنسب وقت لاستلام الأوردر" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">تأكيد وإرسال الطلب</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="cart-overlay" id="authOverlay">
+        <div class="cart-modal" style="width: 400px; max-width: 100%;">
+            <div class="cart-header">
+                <h2>الحساب</h2>
+                <button class="close-cart" id="closeAuth"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="admin-tabs" style="justify-content: center; margin-top: 20px;">
+                <button class="admin-tab-btn active" data-authtab="loginTab">تسجيل الدخول</button>
+                <button class="admin-tab-btn" data-authtab="registerTab">حساب جديد</button>
+            </div>
+
+            <div class="cart-items" style="padding: 0 20px;">
+                <!-- Login Form -->
+                <form id="loginForm" class="contact-form auth-form active" style="border: none; padding: 0; background: transparent;">
+                    <div class="form-group">
+                        <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="loginPassword" placeholder="كلمة المرور" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">دخول</button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="contact-form auth-form" style="display: none; border: none; padding: 0; background: transparent;">
+                    <div class="form-group">
+                        <input type="text" id="regName" placeholder="الاسم الكامل" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="regEmail" placeholder="البريد الإلكتروني" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="regPassword" placeholder="كلمة المرور" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">إنشاء حساب</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel (Hidden) -->
+    <section id="adminPanel" class="admin-panel hidden">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h2>لوحة تحكم الإدارة - WINGII</h2>
+                <button class="btn btn-outline" id="closeAdminBtn">إغلاق</button>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" data-tab="productsTab">المنتجات</button>
+                <button class="admin-tab-btn" data-tab="complaintsTab">الشكاوي والمقترحات</button>
+            </div>
+
+            <div class="admin-content admin-tab-content active" id="productsTab">
+                <div class="admin-form-section">
+                    <h3>إضافة / تعديل منتج</h3>
+                    <form id="adminProductForm">
+                        <input type="hidden" id="adminProductId">
+                        <div class="form-group">
+                            <label>اسم المنتج</label>
+                            <input type="text" id="adminProductName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>السعر ($)</label>
+                            <input type="number" id="adminProductPrice" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>رابط الصورة</label>
+                            <input type="url" id="adminProductImage" required>
+                        </div>
+                        <div class="form-group">
+                            <label>القسم الرئيسي</label>
+                            <select id="adminProductCategory" required>
+                                <option value="men">رجالي</option>
+                                <option value="women">نسائي</option>
+                                <option value="hoodies">هودي</option>
+                                <option value="watches">ساعات</option>
+                                <option value="bags">حقائب</option>
+                                <option value="sneakers">أحذية رياضية</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="adminSubCategoryGroup">
+                            <label>القسم الفرعي (للرجالي فقط)</label>
+                            <select id="adminProductSubCategory">
+                                <option value="">بدون (أقسام أخرى)</option>
+                                <option value="men-tshirts">تيشيرتات</option>
+                                <option value="men-pants">بناطيل</option>
+                                <option value="men-shoes">أحذية</option>
+                                <option value="men-accessories">إكسسوارات</option>
+                                <option value="men-sunglasses">نظارات شمسية</option>
+                            </select>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="adminProductFeatured">
+                            <label for="adminProductFeatured">منتج مميز (يظهر في الرئيسية)</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="adminSaveBtn">حفظ المنتج</button>
+                        <button type="button" class="btn btn-outline hidden" id="adminCancelBtn">إلغاء التعديل</button>
+                    </form>
+                </div>
+                
+                <div class="admin-list-section">
+                    <h3>قائمة المنتجات</h3>
+                    <div class="admin-products-list" id="adminProductsList">
+                        <!-- Admin products injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-content admin-tab-content" id="complaintsTab" style="display: block; opacity: 0; position: absolute; pointer-events: none;">
+                <!-- We toggle opacity and position in js to maintain flex grid if needed, or just block -->
+            </div>
+            <div class="admin-tab-content" id="complaintsTabActual" style="display: none; padding: 20px 0;">
+                <h3>قائمة الشكاوي والمقترحات</h3>
+                <div id="adminComplaintsList" style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                    <!-- Complaints injected here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notifications Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
