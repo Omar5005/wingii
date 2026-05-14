@@ -1,0 +1,87 @@
+import re
+
+def process_html(filepath):
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    replacements = [
+        (r'<title>WINGII - الفخامة والأناقة</title>', r'<title data-i18n="title">WINGII - الفخامة والأناقة</title>'),
+        (r'>الرئيسية<', r' data-i18n="nav_home">الرئيسية<'),
+        (r'>الأقسام<', r' data-i18n="nav_categories">الأقسام<'),
+        (r'>من نحن<', r' data-i18n="nav_about">من نحن<'),
+        (r'>تواصل معنا<', r' data-i18n="nav_contact">تواصل معنا<'),
+        (r'>حجز استشارة<', r' data-i18n="nav_consult">حجز استشارة<'),
+        (r'>الشكاوي<', r' data-i18n="nav_complaints">الشكاوي<'),
+        (r'placeholder="ابحث عن منتج\.\.\."', r'placeholder="ابحث عن منتج..." data-i18n-placeholder="search_placeholder"'),
+        (r'>اكتشف الفخامة مع <span>', r' data-i18n="hero_title">اكتشف الفخامة مع <span data-i18n-ignore>'),
+        (r'>أحدث صيحات الموضة العالمية بين يديك\. تسوق الآن واحصل على خصومات حصرية\.<', r' data-i18n="hero_subtitle">أحدث صيحات الموضة العالمية بين يديك. تسوق الآن واحصل على خصومات حصرية.<'),
+        (r'>تسوق الآن<', r' data-i18n="hero_btn">تسوق الآن<'),
+        (r'>الرائج \(Trending\)<', r' data-i18n="featured_title">الرائج (Trending)<'),
+        (r'>تسوق حسب القسم<', r' data-i18n="cat_title">تسوق حسب القسم<'),
+        (r'>الكل<', r' data-i18n="cat_all">الكل<'),
+        (r'>رجالي<', r' data-i18n="cat_men">رجالي<'),
+        (r'>نسائي<', r' data-i18n="cat_women">نسائي<'),
+        (r'>هودي<', r' data-i18n="cat_hoodies">هودي<'),
+        (r'>ساعات<', r' data-i18n="cat_watches">ساعات<'),
+        (r'>حقائب<', r' data-i18n="cat_bags">حقائب<'),
+        (r'>أحذية رياضية<', r' data-i18n="cat_sneakers">أحذية رياضية<'),
+        (r'>الكل رجالي<', r' data-i18n="sub_all">الكل رجالي<'),
+        (r'>تيشيرتات<', r' data-i18n="sub_tshirts">تيشيرتات<'),
+        (r'>بناطيل<', r' data-i18n="sub_pants">بناطيل<'),
+        (r'>أحذية<', r' data-i18n="sub_shoes">أحذية<'),
+        (r'>إكسسوارات<', r' data-i18n="sub_acc">إكسسوارات<'),
+        (r'>نظارات شمسية<', r' data-i18n="sub_sun">نظارات شمسية<'),
+        (r'>من نحن - WINGII<', r' data-i18n="about_title">من نحن - WINGII<'),
+        (r'>تأسست WINGII على يد عمر، وهي علامة تجارية رائدة في عالم الأزياء الفاخرة\. نسعى دائماً لتقديم أحدث صيحات الموضة بجودة لا تضاهى وتصاميم تعكس الأناقة العصرية\.<', r' data-i18n="about_p1">تأسست WINGII على يد عمر، وهي علامة تجارية رائدة في عالم الأزياء الفاخرة. نسعى دائماً لتقديم أحدث صيحات الموضة بجودة لا تضاهى وتصاميم تعكس الأناقة العصرية.<'),
+        (r'>رؤيتنا هي تمكين كل فرد من التعبير عن نفسه من خلال أزياء تجمع بين الراحة والفخامة\. نحن نؤمن بأن الموضة ليست مجرد ملابس، بل هي أسلوب حياة\.<', r' data-i18n="about_p2">رؤيتنا هي تمكين كل فرد من التعبير عن نفسه من خلال أزياء تجمع بين الراحة والفخامة. نحن نؤمن بأن الموضة ليست مجرد ملابس، بل هي أسلوب حياة.<'),
+        (r'>حجز استشارة أزياء<', r' data-i18n="consult_title">حجز استشارة أزياء<'),
+        (r'>احصل على استشارة خاصة من خبراء الموضة لدينا لتجد ما يناسبك تماماً\.<', r' data-i18n="consult_subtitle">احصل على استشارة خاصة من خبراء الموضة لدينا لتجد ما يناسبك تماماً.<'),
+        (r'placeholder="الاسم الكامل"', r'placeholder="الاسم الكامل" data-i18n-placeholder="name_placeholder"'),
+        (r'placeholder="البريد الإلكتروني"', r'placeholder="البريد الإلكتروني" data-i18n-placeholder="email_placeholder"'),
+        (r'placeholder="رقم الهاتف"', r'placeholder="رقم الهاتف" data-i18n-placeholder="phone_placeholder"'),
+        (r'placeholder="تفاصيل طلب الاستشارة"', r'placeholder="تفاصيل طلب الاستشارة" data-i18n-placeholder="details_placeholder"'),
+        (r'>تأكيد الحجز<', r' data-i18n="consult_btn">تأكيد الحجز<'),
+        (r'>الاستفسارات والتواصل<', r' data-i18n="contact_title">الاستفسارات والتواصل<'),
+        (r'placeholder="الاسم"', r'placeholder="الاسم" data-i18n-placeholder="name_short"'),
+        (r'placeholder="رسالتك"', r'placeholder="رسالتك" data-i18n-placeholder="msg_placeholder"'),
+        (r'>إرسال الرسالة<', r' data-i18n="contact_btn">إرسال الرسالة<'),
+        (r'>الشكاوي والمقترحات<', r' data-i18n="comp_title">الشكاوي والمقترحات<'),
+        (r'>رأيك يهمنا\. إذا كان لديك أي شكوى أو اقتراح، يرجى مشاركته معنا\.<', r' data-i18n="comp_subtitle">رأيك يهمنا. إذا كان لديك أي شكوى أو اقتراح، يرجى مشاركته معنا.<'),
+        (r'>نوع الرسالة<', r' data-i18n="comp_type">نوع الرسالة<'),
+        (r'>شكوى<', r' data-i18n="comp_type_1">شكوى<'),
+        (r'>اقتراح<', r' data-i18n="comp_type_2">اقتراح<'),
+        (r'>استفسار<', r' data-i18n="comp_type_3">استفسار<'),
+        (r'placeholder="تفاصيل الشكوى أو الاقتراح"', r'placeholder="تفاصيل الشكوى أو الاقتراح" data-i18n-placeholder="comp_msg"'),
+        (r'>إرسال<', r' data-i18n="comp_btn">إرسال<'),
+        (r'>الأناقة الفاخرة بين يديك\.<', r' data-i18n="footer_desc">الأناقة الفاخرة بين يديك.<'),
+        (r'>روابط سريعة<', r' data-i18n="footer_links">روابط سريعة<'),
+        (r'>الرياض، المملكة العربية السعودية<', r' data-i18n="footer_addr">الرياض، المملكة العربية السعودية<'),
+        (r'>سلة المشتريات<', r' data-i18n="cart_title">سلة المشتريات<'),
+        (r'>الإجمالي:<', r' data-i18n="cart_total">الإجمالي:<'),
+        (r'>إتمام الطلب<', r' data-i18n="cart_btn">إتمام الطلب<'),
+        (r'>تأكيد الطلب<', r' data-i18n="checkout_title">تأكيد الطلب<'),
+        (r'placeholder="الاسم كامل"', r'placeholder="الاسم كامل" data-i18n-placeholder="order_name"'),
+        (r'placeholder="رقم الموبايل"', r'placeholder="رقم الموبايل" data-i18n-placeholder="order_phone"'),
+        (r'>رقم آخر \(اختياري\)<', r' data-i18n="order_phone2_label">رقم آخر (اختياري)<'),
+        (r'placeholder="رقم آخر"', r'placeholder="رقم آخر" data-i18n-placeholder="order_phone2"'),
+        (r'>المحافظة<', r' data-i18n="order_gov">المحافظة<'),
+        (r'>المنطقة<', r' data-i18n="order_region">المنطقة<'),
+        (r'placeholder="العنوان بالتفصيل \(الشارع، رقم العمارة، الشقة\)"', r'placeholder="العنوان بالتفصيل (الشارع، رقم العمارة، الشقة)" data-i18n-placeholder="order_address"'),
+        (r'placeholder="علامة مميزة"', r'placeholder="علامة مميزة" data-i18n-placeholder="order_landmark"'),
+        (r'placeholder="أنسب وقت لاستلام الأوردر"', r'placeholder="أنسب وقت لاستلام الأوردر" data-i18n-placeholder="order_time"'),
+        (r'>تأكيد وإرسال الطلب<', r' data-i18n="checkout_submit">تأكيد وإرسال الطلب<'),
+        (r'>الحساب<', r' data-i18n="auth_title">الحساب<'),
+        (r'>تسجيل الدخول<', r' data-i18n="auth_login_tab">تسجيل الدخول<'),
+        (r'>حساب جديد<', r' data-i18n="auth_reg_tab">حساب جديد<'),
+        (r'placeholder="كلمة المرور"', r'placeholder="كلمة المرور" data-i18n-placeholder="auth_pass"'),
+        (r'>دخول<', r' data-i18n="auth_login_btn">دخول<'),
+        (r'>إنشاء حساب<', r' data-i18n="auth_reg_btn">إنشاء حساب<'),
+    ]
+
+    for p_old, p_new in replacements:
+        content = re.sub(p_old, p_new, content)
+        
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
+
+process_html('C:/WEP SIDE/index.html')
